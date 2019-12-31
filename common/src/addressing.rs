@@ -48,7 +48,7 @@ pub fn make_standard_address(standard_id: &str) -> String {
     get_family_namespace_prefix() + RESERVED_SPACE + STANDARD + &hash(standard_id, 60)
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum AddressSpace {
     Organization,
     Agent,
@@ -76,5 +76,82 @@ pub fn get_address_type(address: &str) -> AddressSpace {
         AddressSpace::Standard
     } else {
         AddressSpace::AnotherFamily
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    // Test that the agent address has the correct prefix
+    fn test_make_agent_address() {
+        let address = make_agent_address("test_key");
+        let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + AGENT;
+        assert_eq!(address[0..10], correct_address_prefix);
+    }
+
+    #[test]
+    // Test that the organization address has the correct prefix
+    fn test_make_organization_address() {
+        let address = make_organization_address("test_key");
+        let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + ORGANIZATION;
+        assert_eq!(address[0..10], correct_address_prefix);
+    }
+
+    #[test]
+    // Test that the certificate address has the correct prefix
+    fn test_make_certificate_address() {
+        let address = make_certificate_address("test_key");
+        let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + CERTIFICATE;
+        assert_eq!(address[0..10], correct_address_prefix);
+    }
+
+    #[test]
+    // Test that the request address has the correct prefix
+    fn test_make_request_address() {
+        let address = make_request_address("test_key");
+        let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + REQUEST;
+        assert_eq!(address[0..10], correct_address_prefix);
+    }
+
+    #[test]
+    // Test that the standard address has the correct prefix
+    fn test_make_standard_address() {
+        let address = make_standard_address("test_key");
+        let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + STANDARD;
+        assert_eq!(address[0..10], correct_address_prefix);
+    }
+
+    #[test]
+    // Test that the correct AddressSpace is returned based off of
+    // a given state address
+    fn test_get_address_type() {
+        assert_eq!(
+            get_address_type(&format!("00000000{}", AGENT)),
+            AddressSpace::Agent
+        );
+        assert_eq!(
+            get_address_type(&format!("00000000{}", CERTIFICATE)),
+            AddressSpace::Certificate
+        );
+        assert_eq!(
+            get_address_type(&format!("00000000{}", ORGANIZATION)),
+            AddressSpace::Organization
+        );
+        assert_eq!(
+            get_address_type(&format!("00000000{}", REQUEST)),
+            AddressSpace::Request
+        );
+        assert_eq!(
+            get_address_type(&format!("00000000{}", STANDARD)),
+            AddressSpace::Standard
+        );
+
+        let address_with_bad_family_name = "99999999999";
+        assert_eq!(
+            get_address_type(address_with_bad_family_name),
+            AddressSpace::AnotherFamily
+        )
     }
 }
