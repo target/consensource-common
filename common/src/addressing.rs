@@ -84,41 +84,68 @@ mod tests {
     use super::*;
 
     #[test]
-    // Test that the agent address has the correct prefix
+    // Test that the length of the string returned by `hash()` matches
+    // the given size parameter passed
+    fn test_hash() {
+        let hash_len = 10;
+        let hash = hash("test", 10);
+        assert_eq!(hash.chars().count(), hash_len);
+    }
+
+    #[test]
+    // Test that the length of the string returned by `get_family_namespace_prefix()`
+    // matches the defined PREFIX_SIZE
+    fn test_get_family_namespace_prefix() {
+        let prefix = get_family_namespace_prefix();
+        assert_eq!(prefix.chars().count(), PREFIX_SIZE);
+    }
+
+    #[test]
+    // Test that `test_make_agent_address()` returns a 70 char string, and that
+    // the agent address has the correct prefix
     fn test_make_agent_address() {
         let address = make_agent_address("test_key");
+        assert_eq!(address.chars().count(), 70);
         let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + AGENT;
         assert_eq!(address[0..10], correct_address_prefix);
     }
 
     #[test]
-    // Test that the organization address has the correct prefix
+    // Test that `test_make_organization_address()` returns a 70 char string, and that
+    // the organization address has the correct prefix
     fn test_make_organization_address() {
         let address = make_organization_address("test_key");
+        assert_eq!(address.chars().count(), 70);
         let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + ORGANIZATION;
         assert_eq!(address[0..10], correct_address_prefix);
     }
 
     #[test]
-    // Test that the certificate address has the correct prefix
+    // Test that `test_make_certificate_address()` returns a 70 char string, and that
+    // the certificate address has the correct prefix
     fn test_make_certificate_address() {
         let address = make_certificate_address("test_key");
+        assert_eq!(address.chars().count(), 70);
         let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + CERTIFICATE;
         assert_eq!(address[0..10], correct_address_prefix);
     }
 
     #[test]
-    // Test that the request address has the correct prefix
+    // Test that `test_make_request_address()` returns a 70 char string, and that
+    // the request address has the correct prefix
     fn test_make_request_address() {
         let address = make_request_address("test_key");
+        assert_eq!(address.chars().count(), 70);
         let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + REQUEST;
         assert_eq!(address[0..10], correct_address_prefix);
     }
 
     #[test]
-    // Test that the standard address has the correct prefix
+    // Test that `test_make_standard_address()` returns a 70 char string, and that
+    // the standard address has the correct prefix
     fn test_make_standard_address() {
         let address = make_standard_address("test_key");
+        assert_eq!(address.chars().count(), 70);
         let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + STANDARD;
         assert_eq!(address[0..10], correct_address_prefix);
     }
