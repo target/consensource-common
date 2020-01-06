@@ -20,7 +20,14 @@ RUN mv protoc3/bin/* /usr/local/bin/ && \
 # Use latest stable of rust toolchain & linter (rustfmt) & install tarpaulin
 RUN cargo install cargo-tarpaulin
 
-# Make a testing directory for tarpaulin
-RUN mkdir /tarpaulin && \
-    cd /tarpaulin
-    
+# Make a testing directory for mounting volumes
+RUN mkdir /tarpaulin
+
+# Copy run script into root dir
+COPY ./run-tarpaulin.sh /
+
+# Give executable permissions to the script
+RUN chmod +x /run-tarpaulin.sh
+
+# Run tarpaulin
+ENTRYPOINT ["/run-tarpaulin.sh"]
