@@ -1,4 +1,4 @@
-FROM target/consensource-rust:1.39-nightly
+FROM target/consensource-rust:nightly
 
 # Install zqm, protobuf, wget, cmake, netcat
 RUN apt-get update && \
@@ -24,4 +24,3 @@ RUN rustup default nightly && \
 # Make a testing directory for tarpaulin
 RUN mkdir /tarpaulin && \
     cd /tarpaulin
-    
