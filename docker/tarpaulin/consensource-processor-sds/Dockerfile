@@ -1,4 +1,4 @@
-FROM target/consensource-rust:nightly
+FROM target/consensource-rust:stable
 
 # Install zqm, protobuf, wget, cmake, netcat
 RUN apt-get update && \
@@ -17,10 +17,17 @@ RUN mv protoc3/bin/* /usr/local/bin/ && \
     mv protoc3/include/* /usr/local/include/ && \
     rm -rf protoc3/
 
-# Use latest stable/nightly of rust toolchain & linter (rustfmt) & install tarpaulin
-RUN rustup default nightly && \
-    cargo install cargo-tarpaulin
+# Use latest stable of rust toolchain & linter (rustfmt) & install tarpaulin
+RUN cargo install cargo-tarpaulin
 
-# Make a testing directory for tarpaulin
-RUN mkdir /tarpaulin && \
-    cd /tarpaulin
+# Make a testing directory for mounting volumes
+RUN mkdir /tarpaulin
+
+# Copy run script into root dir
+COPY ./run-tarpaulin.sh /
+
+# Give executable permissions to the script
+RUN chmod +x /run-tarpaulin.sh
+
+# Run tarpaulin
+ENTRYPOINT ["/run-tarpaulin.sh"]
