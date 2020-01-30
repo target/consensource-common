@@ -16,7 +16,6 @@
 extern crate glob;
 extern crate protoc_rust;
 
-use std::error::Error;
 use std::fs;
 use std::io::prelude::*;
 use std::path::Path;
@@ -78,7 +77,7 @@ fn main() {
             Err(err) => panic!(
                 "Unable to create file {}: {}",
                 mod_file_name,
-                err.description()
+                err.to_string()
             ),
             Ok(file) => file,
         };
@@ -93,11 +92,7 @@ fn main() {
                 .join("\n")
         );
         match file.write_all(content.as_bytes()) {
-            Err(err) => panic!(
-                "Unable to write to {}: {}",
-                mod_file_name,
-                err.description()
-            ),
+            Err(err) => panic!("Unable to write to {}: {}", mod_file_name, err.to_string()),
             Ok(_) => println!("generated {}", mod_file_name),
         }
         write_file(&content, mod_file_path);
@@ -116,15 +111,11 @@ fn main() {
 
 fn write_file(content: &str, file_path: &Path) {
     let mut file = match fs::File::create(file_path) {
-        Err(err) => panic!(
-            "Unable to create file {:?}: {}",
-            file_path,
-            err.description()
-        ),
+        Err(err) => panic!("Unable to create file {:?}: {}", file_path, err.to_string()),
         Ok(file) => file,
     };
     match file.write_all(content.as_bytes()) {
-        Err(err) => panic!("Unable to write to {:?}: {}", file_path, err.description()),
+        Err(err) => panic!("Unable to write to {:?}: {}", file_path, err.to_string()),
         Ok(_) => println!("Generated {:?}", file_path),
     };
 }
@@ -163,7 +154,7 @@ fn read_last_build_time() -> Duration {
             println!(
                 "unable to open {}: {}; defaulting to 0",
                 mod_file_name,
-                err.description()
+                err.to_string()
             );
             Duration::new(0, 0)
         }
