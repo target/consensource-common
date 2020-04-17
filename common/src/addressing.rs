@@ -8,6 +8,7 @@ const CERTIFICATE: &str = "01";
 const ORGANIZATION: &str = "02";
 const STANDARD: &str = "03";
 const REQUEST: &str = "04";
+const ASSERTION: &str = "05";
 
 const PREFIX_SIZE: usize = 6;
 const RESERVED_SPACE: &str = "00";
@@ -48,6 +49,11 @@ pub fn make_standard_address(standard_id: &str) -> String {
     get_family_namespace_prefix() + RESERVED_SPACE + STANDARD + &hash(standard_id, 60)
 }
 
+/// Returns the address for a assertion based on the provided assertion id
+pub fn make_assertion_address(standard_id: &str) -> String {
+    get_family_namespace_prefix() + RESERVED_SPACE + ASSERTION + &hash(standard_id, 60)
+}
+
 #[derive(Debug, PartialEq)]
 pub enum AddressSpace {
     Organization,
@@ -55,6 +61,7 @@ pub enum AddressSpace {
     Certificate,
     Request,
     Standard,
+    Assertion,
     AnotherFamily,
 }
 
@@ -74,6 +81,8 @@ pub fn get_address_type(address: &str) -> AddressSpace {
         AddressSpace::Request
     } else if infix == STANDARD {
         AddressSpace::Standard
+    } else if infix == ASSERTION {
+        AddressSpace::Assertion
     } else {
         AddressSpace::AnotherFamily
     }
@@ -151,6 +160,16 @@ mod tests {
     }
 
     #[test]
+    // Test that `test_make_assertion_address()` returns a 70 char string, and that
+    // the assertion address has the correct prefix
+    fn test_make_assertion_address() {
+        let address = make_assertion_address("test_key");
+        assert_eq!(address.chars().count(), 70);
+        let correct_address_prefix = get_family_namespace_prefix() + RESERVED_SPACE + ASSERTION;
+        assert_eq!(address[0..10], correct_address_prefix);
+    }
+
+    #[test]
     // Test that the correct AddressSpace is returned based off of
     // a given state address
     fn test_get_address_type() {
@@ -173,6 +192,10 @@ mod tests {
         assert_eq!(
             get_address_type(&format!("00000000{}", STANDARD)),
             AddressSpace::Standard
+        );
+        assert_eq!(
+            get_address_type(&format!("00000000{}", ASSERTION)),
+            AddressSpace::Assertion
         );
 
         let address_with_bad_family_name = "99999999999";
