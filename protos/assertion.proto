@@ -17,7 +17,7 @@ message Assertion {
     string assertor_pub_key = 2;
 
     //The type of the assertion object
-    Type type = 3;
+    Type assertion_type = 3;
 
     //The id of the record that is an assertion
     string object_id = 4;

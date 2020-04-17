@@ -198,11 +198,18 @@ message AccreditCertifyingBodyAction {
 }
 
 message AssertAction {
-
+    // UUID
+    string assertion_id = 1;
+    // Wrapper around CreateOrganizationAction.
+    // Support assertions about existing factories
+    message FactoryAssertion {
+      CreateOrganizationAction factory = 1;
+      string existing_factory_id = 2;
+    }
     // An AssertAction will be exactly one of these at a time.
     oneof assertion {
       // Asserts a new factory exists, or that an existing factory has different info.
-      CreateOrganizationAction new_factory = 2;
+      FactoryAssertion new_factory = 2;
 
       // Asserts a factory that is already in state has a certificate.
       IssueCertificateAction new_certificate = 3;
