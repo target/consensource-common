@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Target"]
 
 [dependencies]
-protobuf = "2.8.1"
+protobuf = "2.14.0"
 
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
@@ -16,5 +16,5 @@ rustc-serialize = "0.3.22"
 rust-crypto = "0.2"
 
 [build-dependencies]
-protoc-rust = "2.0"
+protoc-rust = "2.14"
 glob = "0.2"
