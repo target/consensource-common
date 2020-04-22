@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "standard.proto";
-
 message Organization {
     enum Type {
         UNSET_TYPE = 0;

@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "request.proto";
-
 message Certificate {
     message CertificateData {
         // Name of data field associated with certificate data.
