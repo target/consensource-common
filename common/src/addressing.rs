@@ -50,8 +50,8 @@ pub fn make_standard_address(standard_id: &str) -> String {
 }
 
 /// Returns the address for a assertion based on the provided assertion id
-pub fn make_assertion_address(standard_id: &str) -> String {
-    get_family_namespace_prefix() + RESERVED_SPACE + ASSERTION + &hash(standard_id, 60)
+pub fn make_assertion_address(assertion_id: &str) -> String {
+    get_family_namespace_prefix() + RESERVED_SPACE + ASSERTION + &hash(assertion_id, 60)
 }
 
 #[derive(Debug, PartialEq)]

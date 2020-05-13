@@ -6,6 +6,7 @@ message Organization {
         CERTIFYING_BODY = 1;
         STANDARDS_BODY = 2;
         FACTORY = 3;
+        INGESTION = 4;
     }
 
     message Authorization {
@@ -102,6 +103,11 @@ message Factory {
 
     // Location of the factory
     Address address = 1;
+}
+
+message Ingestion {
+  // This message could be used to capture information that is only
+  // pertinent to an Ingestion service
 }
 
 message OrganizationContainer {
