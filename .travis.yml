@@ -1,6 +1,6 @@
 language: rust
 rust:
-    - 1.39.0
+    - 1.44.0
 
 before_install:
     # Install protoc for protoc-rust crate (automate protobuf generation)
