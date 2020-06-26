@@ -18,7 +18,7 @@ RUN mv protoc3/bin/* /usr/local/bin/ && \
     rm -rf protoc3/
 
 # Use latest stable of rust toolchain & linter (rustfmt) & install tarpaulin
-RUN cargo install cargo-tarpaulin
+RUN cargo install cargo-tarpaulin --version 0.14.0
 
 # Make a testing directory for mounting volumes
 RUN mkdir /tarpaulin
