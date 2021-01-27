@@ -69,11 +69,19 @@ message CreateOrganizationAction {
 }
 
 message UpdateOrganizationAction {
+    // UUID of the organization.
+    string id = 1;
+
+    // Updated name of the organization.
+    string name = 2;
+
     // Updated contact info.
-    repeated Organization.Contact contacts = 1;
+    repeated Organization.Contact contacts = 3;
 
     // Updated address (if Factory).
-    Factory.Address address = 2;
+    Factory.Address address = 4;
+
+
 }
 
 message AuthorizeAgentAction {
