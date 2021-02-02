@@ -20,6 +20,7 @@ message CertificateRegistryPayload{
         ACCREDIT_CERTIFYING_BODY_ACTION = 10;
         ASSERT_ACTION = 11;
         TRANSFER_ASSERTION = 12;
+        UPDATE_CERTIFICATE = 13;
     }
 
     // Whether the payload contains a create agent, create organization,
@@ -33,13 +34,14 @@ message CertificateRegistryPayload{
     UpdateOrganizationAction update_organization = 4;
     AuthorizeAgentAction authorize_agent = 5;
     IssueCertificateAction issue_certificate = 6;
-    CreateStandardAction create_standard = 7 ;
+    CreateStandardAction create_standard = 7;
     UpdateStandardAction update_standard = 8;
     OpenRequestAction open_request_action = 9;
     ChangeRequestStatusAction change_request_status_action = 10;
     AccreditCertifyingBodyAction accredit_certifying_body_action = 11;
     AssertAction assert_action = 12;
     TransferAssertionAction transfer_assertion_action = 13;
+    UpdateCertificateAction update_certificate = 14;
 }
 
 message CreateAgentAction {
@@ -80,8 +82,6 @@ message UpdateOrganizationAction {
 
     // Updated address (if Factory).
     Factory.Address address = 4;
-
-
 }
 
 message AuthorizeAgentAction {
@@ -131,6 +131,22 @@ message IssueCertificateAction {
     // Approximately when the certificate will become invalid.
     // Format: UTC timestamp
     uint64 valid_to = 8;
+}
+
+message UpdateCertificateAction {
+  // UUID of certificate that is being updated.
+  string id = 1;
+
+  // Additional certificate data.
+  repeated Certificate.CertificateData certificate_data = 2;
+
+  // Time certificate was issued.
+  // Format: UTC timestamp
+  uint64 valid_from = 3;
+
+  // Approximately when the certificate will become invalid.
+  // Format: UTC timestamp
+  uint64 valid_to = 4;
 }
 
 message OpenRequestAction {
