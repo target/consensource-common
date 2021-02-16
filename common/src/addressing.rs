@@ -4,14 +4,14 @@ use crypto::sha2::Sha256;
 pub const FAMILY_NAMESPACE: &str = "consensource";
 pub const FAMILY_VERSION: &str = "0.1";
 const AGENT: &str = "00";
-const CERTIFICATE: &str = "01";
-const ORGANIZATION: &str = "02";
-const STANDARD: &str = "03";
+pub const CERTIFICATE: &str = "01";
+pub const ORGANIZATION: &str = "02";
+pub const STANDARD: &str = "03";
 const REQUEST: &str = "04";
 const ASSERTION: &str = "05";
 
 const PREFIX_SIZE: usize = 6;
-const RESERVED_SPACE: &str = "00";
+pub const RESERVED_SPACE: &str = "00";
 
 fn hash(object: &str, num: usize) -> String {
     let mut sha = Sha256::new();
