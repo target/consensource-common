@@ -360,7 +360,10 @@ impl Transact for payload::AssertAction {
         let agent_address = addressing::make_agent_address(&public_key);
         let assertion_address = addressing::make_assertion_address(&self.assertion_id);
         if self.has_new_factory() {
-            return vec![agent_address, assertion_address];
+            let factory_address = addressing::make_organization_address(
+                self.get_new_factory().get_factory().get_id(),
+            );
+            return vec![agent_address, assertion_address, factory_address];
         } else if self.has_new_certificate() {
             let factory_address =
                 addressing::make_organization_address(self.get_new_certificate().get_factory_id());
