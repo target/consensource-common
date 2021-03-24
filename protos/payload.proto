@@ -21,6 +21,7 @@ message CertificateRegistryPayload{
         ASSERT_ACTION = 11;
         TRANSFER_ASSERTION = 12;
         UPDATE_CERTIFICATE = 13;
+        CREATE_PRE_CERTIFIED_REQUEST_ACTION = 14;
     }
 
     // Whether the payload contains a create agent, create organization,
@@ -42,6 +43,7 @@ message CertificateRegistryPayload{
     AssertAction assert_action = 12;
     TransferAssertionAction transfer_assertion_action = 13;
     UpdateCertificateAction update_certificate = 14;
+    CreatePreCertifiedRequestAction create_pre_certified_request_action = 15;
 }
 
 message CreateAgentAction {
@@ -250,4 +252,16 @@ message TransferAssertionAction {
     string assertion_id = 1;
     // public key of the new owner
     string new_owner_public_key = 2;
+}
+
+message CreatePreCertifiedRequestAction {
+    // UUID of the request.
+    string id = 1;
+
+    // Standard the factory is claiming they are pre certified to
+    string standard_id = 2;
+
+    // Time request was made
+    // Format: UTC timestamp
+    uint64 request_date = 3;
 }

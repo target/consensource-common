@@ -212,6 +212,19 @@ pub fn open_request(
     request
 }
 
+pub fn create_pre_certified_request(
+    request_id: &str,
+    standard_id: &str,
+    request_date: u64,
+) -> payload::CreatePreCertifiedRequestAction {
+    let mut request = payload::CreatePreCertifiedRequestAction::new();
+    request.set_id(String::from(request_id));
+    request.set_standard_id(String::from(standard_id));
+    request.set_request_date(request_date);
+
+    request
+}
+
 pub fn change_request_status(
     request_id: &str,
     status: Request_Status,

@@ -257,6 +257,23 @@ mod tests {
     }
 
     #[test]
+    fn create_pre_certified_request_to_transaction() {
+        let context =
+            signing::create_context("secp256k1").expect("Failed to create secp256k1 context");
+        let private_key = context
+            .new_random_private_key()
+            .expect("Failed to generate random private key");
+        let factory = CryptoFactory::new(&*context);
+        let signer = factory.new_signer(&*private_key);
+
+        let action = action::create_pre_certified_request(REQUEST_ID, STANDARD_ID, 1);
+
+        let transaction = action.make_transaction(&signer, ORG_ID_1);
+
+        assert!(transaction.is_ok())
+    }
+
+    #[test]
     fn change_request_status_to_transaction() {
         let context =
             signing::create_context("secp256k1").expect("Failed to create secp256k1 context");
