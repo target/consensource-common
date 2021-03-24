@@ -336,6 +336,26 @@ impl Transact for payload::OpenRequestAction {
 }
 
 /// Needs to called with org_id
+impl Transact for payload::CreatePreCertifiedRequestAction {
+    fn inputs_without_org(&self, public_key: String) -> Vec<String> {
+        let agent_address = addressing::make_agent_address(&public_key);
+        let request_address = addressing::make_request_address(&self.id);
+        let standard_address = addressing::make_standard_address(&self.standard_id);
+        vec![agent_address, request_address, standard_address]
+    }
+    fn outputs_without_org(&self, _public_key: String) -> Vec<String> {
+        let request_address = addressing::make_request_address(&self.id);
+        vec![request_address]
+    }
+    fn make_payload(&self) -> payload::CertificateRegistryPayload {
+        let mut payload = payload::CertificateRegistryPayload::new();
+        payload.action = CertificateRegistryPayload_Action::CREATE_PRE_CERTIFIED_REQUEST_ACTION;
+        payload.set_create_pre_certified_request_action(self.clone());
+        payload
+    }
+}
+
+/// Needs to called with org_id
 impl Transact for payload::ChangeRequestStatusAction {
     fn inputs_without_org(&self, public_key: String) -> Vec<String> {
         let agent_address = addressing::make_agent_address(&public_key);

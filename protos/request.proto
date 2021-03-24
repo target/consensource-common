@@ -7,6 +7,7 @@ message Request {
         IN_PROGRESS = 2;
         CLOSED = 3;
         CERTIFIED = 4;
+        PRE_CERTIFIED = 5;
     }
 
     // UUID of this request.
