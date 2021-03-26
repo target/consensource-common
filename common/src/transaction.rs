@@ -389,9 +389,12 @@ impl Transact for payload::AssertAction {
                 addressing::make_organization_address(self.get_new_certificate().get_factory_id());
             let standard_address =
                 addressing::make_standard_address(self.get_new_certificate().get_standard_id());
+            let cert_address =
+                addressing::make_certificate_address(self.get_new_certificate().get_id());
             return vec![
                 agent_address,
                 assertion_address,
+                cert_address,
                 factory_address,
                 standard_address,
             ];
