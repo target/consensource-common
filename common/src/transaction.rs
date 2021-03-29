@@ -399,7 +399,9 @@ impl Transact for payload::AssertAction {
                 standard_address,
             ];
         } else if self.has_new_standard() {
-            return vec![agent_address, assertion_address];
+            let standard_address =
+                addressing::make_standard_address(self.get_new_standard().get_standard_id());
+            return vec![agent_address, assertion_address, standard_address];
         } else {
             return vec![];
         }
